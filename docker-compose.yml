@@ -1,0 +1,21 @@
+version: "3.9"
+services:
+  phpapp:
+    container_name: "phpapp"
+    build:
+      context: .
+      dockerfile: ./Dockerfile.phpapp
+    volumes:
+      - "./www:/var/www/html"
+    ports:
+      - "1234:80"
+    depends_on:
+      - "mysql"
+  mysql:
+    container_name: "php-db"
+    build:
+      context: .
+      dockerfile: ./Dockerfile.db
+    command: "--default-authentication-plugin=mysql_native_password"
+    environment:
+      - "MYSQL_ROOT_PASSWORD=some_password"
